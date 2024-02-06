@@ -1,4 +1,3 @@
-```python
 from pymongo import MongoClient, ASCENDING
 
 # Create connection
@@ -24,4 +23,3 @@ pipeline = [
 
 myColl.aggregate(pipeline, collation={'locale': 'de@collation=phonebook'})
 # End aggregaton collation
-```
