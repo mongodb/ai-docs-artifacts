@@ -1,4 +1,3 @@
-```python
 from pymongo import MongoClient
 from bson.son import SON
 
@@ -64,4 +63,3 @@ def run():
 
 if __name__ == "__main__":
     run()
-```
