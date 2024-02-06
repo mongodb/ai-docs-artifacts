@@ -1,4 +1,3 @@
-```python
 # Subscribe to an event
 
 from pymongo import MongoClient, monitoring
@@ -33,4 +32,3 @@ try:
     run()
 except Exception as e:
     print(e)
-```
