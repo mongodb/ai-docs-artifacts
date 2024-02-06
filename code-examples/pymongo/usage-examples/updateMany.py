@@ -1,4 +1,3 @@
-```python
 # Update multiple documents
 
 from pymongo import MongoClient
@@ -39,4 +38,3 @@ def run():
 
 if __name__ == "__main__":
     run()
-```

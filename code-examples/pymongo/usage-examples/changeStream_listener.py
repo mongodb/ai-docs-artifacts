@@ -1,4 +1,3 @@
-```python
 # Change stream listener
 
 from pymongo import MongoClient
@@ -51,5 +50,3 @@ except Exception as e:
     print(e)
 finally:
     loop.close()
-```
-Please note that change streams and some other features are available only in MongoDB 3.6 and up. Therefore this Python code works for version 3.6 and up. If you try this with an earlier version of MongoDB, you may receive an error.
