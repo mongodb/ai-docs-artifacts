@@ -1,4 +1,3 @@
-```scala
 import org.mongodb.scala._
 import org.mongodb.scala.model._
 import org.mongodb.scala.model.Aggregates._
@@ -89,5 +88,3 @@ def run() {
 }
 
 run()
-```
-Note: The blocking in `run` using `Await` is not recommended in production code. It is used here to simulate the `await` used in the Javascript example. In real production code, you should chain the futures using `map`, `flatMap` and `for` comprehensions.
