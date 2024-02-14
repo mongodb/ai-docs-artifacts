@@ -2,27 +2,23 @@
 require 'vendor/autoload.php';
 
 // Replace the uri string with your MongoDB deployment's connection string
-$uri = "<connection string uri>";
+$uri = "mongodb://localhost:27017/";
 $client = new MongoDB\Client($uri);
 
 try {
-    $database = $client->sample_mflix;
-    $movies = $database->movies;
+    $collection = $client->sample_mflix->movies;
 
     // Print the estimate of the number of documents in the "movies" collection
-    $estimate = $movies->count();
+    $estimate = $collection->count();
     echo "Estimated number of documents in the movies collection: " . $estimate . "\n";
 
     // Print the number of documents in the "movies" collection that match the specified query
     $query = ['countries' => 'Canada'];
-    $countCanada = $movies->count($query);
+    $countCanada = $collection->count($query);
     echo "Number of movies from Canada: " . $countCanada . "\n";
-        
+
 } catch (Exception $e) {
     // Print any thrown exceptions
     echo $e->getMessage();
-} finally {
-    // Close the connection after the operations complete
-    $client = null;
 }
 ?>
