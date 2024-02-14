@@ -1,53 +1,23 @@
 <?php
 require_once __DIR__ . "/vendor/autoload.php";
 
-$uri = "<connection string uri>";
+$uri = "mongodb://localhost:27017";
 
 $client = new MongoDB\Client($uri);
 
-class IMDB {
-    public $rating;
-    public $votes;
-    public $id;
-
-    function __construct($rating, $votes, $id) {
-        $this->rating = $rating;
-        $this->votes = $votes;
-        $this->id = $id;
-    }
-}
-
-class Movie {
-    public $title;
-    public $imdb;
-    public $runtime;
-
-    function __construct($title, $imdb, $runtime) {
-        $this->title = $title;
-        $this->imdb = $imdb;
-        $this->runtime = $runtime;
-    }
-}
-
 try {
-    $db = $client->sample_mflix;
-    $collection = $db->movies;
-    
+    $collection = $client->sample_mflix->movies;
+
+    $filter = ['runtime' => ['$lt' => 15]];
     $options = ['sort' => ['title' => 1]];
 
-    $movies = $collection->find(['runtime' => ['$lt' => 15]], $options);
-
-    if (!iterator_count($movies)) {
-       trigger_error("No documents found!", E_USER_WARNING);
-    }
+    $movies = $collection->find($filter, $options);
 
     foreach ($movies as $movie) {
-       var_dump($movie);
+       print_r($movie);
     }
 
 } catch(Exception $e) {
     echo $e->getMessage();
-} finally {
-    $client = null;
 }
 ?>
