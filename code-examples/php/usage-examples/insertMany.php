@@ -2,11 +2,6 @@
 
 require_once __DIR__ . "/vendor/autoload.php";
 
-// Replace the uri string with your MongoDB deployment's connection string.
-$uri = "<connection string uri>";
-
-$client = new MongoDB\Client($uri);
-
 class Food {
     public $name;
     public $healthy;
@@ -17,11 +12,15 @@ class Food {
     }
 }
 
-try {
-    $database = $client->insertDB;
-    $foods = $database->foods;
+// Replace the uri string with your MongoDB deployment's connection string.
+$uri = "mongodb://localhost:27017";
 
-    $result = $foods->insertMany(
+$client = new MongoDB\Client($uri);
+
+try {
+    $collection = $client->shopping->foods;
+
+    $result = $collection->insertMany(
         [
             new Food("cake", false),
             new Food("lettuce", true),
@@ -29,7 +28,7 @@ try {
         ]
     );
 
-    echo $result->getInsertedCount() . " documents were inserted" . PHP_EOL;
+    print($result->getInsertedCount() . " documents were inserted" . PHP_EOL);
 } catch (Exception $e) {
     echo $e->getMessage();
 } finally {
