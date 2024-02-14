@@ -1,16 +1,36 @@
 <?php
-/* Connect to MongoDB */
-$manager = new MongoDB\Driver\Manager("<connection string uri>");
 
-$filter = ['title' => new MongoDB\BSON\Regex('^The Cat from', 'i')];
-$newTitle = ['title' => 'The Cat from Sector ' . rand(1, 1000)];
-  
-$bulk = new MongoDB\Driver\BulkWrite;
-$bulk->update($filter, ['$set' => $newTitle], ['multi' => false, 'upsert' => false]);
+require_once __DIR__ . "/vendor/autoload.php";
 
-/* Execute BulkWrite */
-$result = $manager->executeBulkWrite('sample_mflix.movies', $bulk);
+class Haiku {
+  public $title;
+  public $content;
 
-echo "Modified " . $result->getModifiedCount() . " document(s)\n";
+  function __construct($title, $content){
+    $this->title = $title;
+    $this->content = $content;
+  }
+}
+
+$uri = "mongodb://localhost:27017";
+$client = new MongoDB\Client($uri);
+
+$collection = $client->poetry->haiku;
+
+try {
+    $replacement = new Haiku(
+        "Even in Kyoto",
+        "Even in Kyoto, Hearing the cuckoo’s cry, I long for Kyoto"
+    );
+
+    $filter = ['title' => new MongoDB\BSON\Regex('^Record', 'i')];
+
+    $result = $collection->replaceOne($filter, $replacement);
+
+    print_r($result);
+
+} catch (Exception $e) {
+    echo $e->getMessage();
+}
 
 ?>
